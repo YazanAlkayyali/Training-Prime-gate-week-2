@@ -1,14 +1,10 @@
 import os
-from dotenv import load_dotenv
 from langchain_groq import ChatGroq
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.messages import HumanMessage, AIMessage
 from langfuse import Langfuse
 from langfuse.langchain import CallbackHandler
-
-
-load_dotenv()
-API_KEY = os.getenv("GROQ_API_KEY")
+from .ai_config import API_KEY
 
 Langfuse(
     public_key=os.getenv("LANGFUSE_PUBLIC_KEY"),
@@ -39,7 +35,3 @@ def chat(user_input: str) -> str:
     history.append(HumanMessage(content=user_input))
     history.append(AIMessage(content=response.content))
     return response.content
-
-print(chat("what color is the sky, its my favourit color"))
-print(chat('who were the countries in world war 2'))
-print(chat("What is my favorite color"))
